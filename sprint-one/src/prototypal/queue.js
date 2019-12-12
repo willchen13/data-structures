@@ -1,8 +1,33 @@
 var Queue = function() {
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
+  var instance=Object.create(queueMethods);
+  instance.tail=0;
+  instance.head=0;
+  instance.storage={};
+
+  return instance;
 };
 
-var queueMethods = {};
+var queueMethods = {
+  enqueue: function(value){
+    this.storage[this.tail]=value;
+    this.tail++;
+
+  },
+  dequeue: function(){
+    if(this.tail>=this.head){
+      var val=this.storage[this.head];
+      delete this.storage[this.head];
+      this.head++;
+      return val;
+    }
+  },
+  size: function(){
+    if(this.tail>=this.head){
+      return this.tail-this.head;
+    }
+    return 0;
+  }
+
+};
 
 
