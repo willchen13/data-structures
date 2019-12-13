@@ -4,33 +4,48 @@ var LinkedList = function() {
   list.tail = null;
 
   list.addToTail = function(value) {
-    //check is list is empty => list.head=Node(value)
-    if (list.head === null) {
-      list.head = Node(value);
-      list.tail = list[list.head];
-    }
-    //if it exists
-    list.tail = Node(value);
+    //check to see if tail/head exists in the linked list
 
-    //if list is not empty => list.tail=Node(value)
+    if (!list.tail) {
+      list.head = list.tail = Node(value);
+    } else {
+
+      var oldTail = list.tail;
+
+      //add a tail to the the list
+      list.tail = Node(value);
+
+      oldTail.next = list.tail;
+    }
   };
 
-  list.removeHead = function() {
-    // if (list.head === null) {
-    //   return; // if current head is null then we will just return
-    // }
-    // var oldHead = list.head.value; // save currentHead to a oldHead variable
-    // list.head = list.head.next;
 
+  list.removeHead = function(value) {
+    if (!list.head) {
+      list.head = list.tail = Node(value);
+    } else {
+      var removedHead = list.head;
 
-    // // oldHead = Node(); // get rid of the old head
+      if (list.head === list.tail) {
+        list.head = list.tail = null;
+      } else {
 
-    // return oldHead; //return old head
-    list.head = list.head.next.value;
-
+        list.head = list.head.next;
+      }
+      return removedHead.value;
+    }
   };
 
   list.contains = function(target) {
+    var tracker = list.head;
+
+    while (tracker) {
+      if (tracker.value === target) {
+        return true;
+      }
+      tracker = tracker.next;
+    }
+    return false;
   };
 
   return list;
