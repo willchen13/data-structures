@@ -1,72 +1,69 @@
-var BinarySearchTree = function (value) {
-  //create a new instance of bst and set prototype to the bstmethods
-  var bst= Object.create(bstMethods);
+var BinarySearchTree = function(value) {
+    var bst = Object.create(binarySearchTreeMethods);
 
-  this.value = value;
-  this.left = null;
-  this.right = null;
+    bst.value = value;
+    bst.left = null;
+    bst.right = null;
 
-  return bst;
-}
+    return bst;
+  };
 
-var bstMethods = {};
+  var binarySearchTreeMethods = {};
 
-bstMethods.insert = function (value) {
-  if (this.value === undefined) {
+  binarySearchTreeMethods.insert = function(value) {
+    if (this.value === undefined) {
       this.value = value;
       return;
-  }
-  //if value is less than value of root
-  if (this.value > value) {
-  //check left
+    }
+
+    if (this.value > value) {
+      // left
       if (this.left === null) {
-          this.left === BinarySearchTree(value);
+        this.left = BinarySearchTree(value);
       } else {
-          this.left.insert(value);
+        this.left.insert(value);
       }
-      //check right
-  } else {
+    } else {
+      // right
       if (this.right === null) {
-          this.right = BinarySearchTree(value);
-      }else{
-          this.right.insert(value);
-      }
-  }
-};
-
-binarySearchTreeMethods.contains = function(value){
-  if( this.value === value){
-      return value;
-  }
-  //check left
-  if (this.value > value) {
-      if(this.left === null) {
-          return false;
+        this.right = BinarySearchTree(value);
       } else {
-          return this.left.contains(value);
+        this.right.insert(value);
       }
-  } else {
-      //check right
+    }
+  };
+
+  binarySearchTreeMethods.contains = function(value) {
+    if (this.value === value) {
+      return true;
+    }
+
+    if (this.value > value) {
+      if (this.left === null) {
+        return false;
+      } else {
+        return this.left.contains(value);
+      }
+    } else {
       if (this.right === null) {
-          return false;
+        return false;
       } else {
-          return this.right.contains(value);
+        return this.right.contains(value);
       }
-  }
-}
+    }
+  };
 
-binarySearchTreeMethods.depthFirstLog = function(cb) {
-  //accepts a callback and executes it on every value contained int eh tree
-  cb(this.value);
+  binarySearchTreeMethods.depthFirstLog = function (cb) {
+    cb(this.value);
 
-  if(this.left) {
-      cb(this.left.depthFirstLog(cb));
-  }
+    if (this.left) {
+      this.left.depthFirstLog(cb);
+    }
 
-  if(this.right) {
-      cb(this.right.depthFirstLog(cb));
-  }
-}
+    if (this.right) {
+      this.right.depthFirstLog(cb);
+    }
+  };
 
 /*
 * Complexity: What is the time complexity of the above functions?
